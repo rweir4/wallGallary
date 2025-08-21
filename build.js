@@ -1,4 +1,5 @@
 const esbuild = require('esbuild');
+const { sassPlugin } = require('esbuild-sass-plugin');
 
 const isWatch = process.argv.includes('--watch');
 
@@ -14,6 +15,7 @@ const buildOptions = {
     '.js': 'jsx',
     '.css': 'css'
   },
+  plugins: [sassPlugin()],
   external: ['react', 'react-dom'],
   // Force CSS to be extracted to a separate file
   write: true,

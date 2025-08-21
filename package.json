@@ -20,13 +20,14 @@
   },
   "homepage": "https://github.com/rweir4/portfolio_site#readme",
   "dependencies": {
-    "esbuild-sass-plugin": "^3.3.1",
     "express": "^5.1.0",
     "tailwind": "^4.0.0",
     "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.27.1",
-    "esbuild": "^0.25.9"
+    "esbuild": "^0.25.9",
+    "esbuild-sass-plugin": "^3.3.1",
+    "sass": "^1.90.0"
   }
 }
