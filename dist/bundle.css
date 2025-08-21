@@ -9,15 +9,15 @@ body {
   opacity: 0.85;
   border: 3px solid black;
   border-radius: 20px;
-  margin: auto;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease-in-out;
   text-align: center;
+}
+.gym-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-top: 5rem;
 }
 .gym-embed {
   border: 1px solid #ddd;
@@ -27,12 +27,20 @@ body {
   height: 20rem;
   margin: auto;
 }
+.reviews {
+  height: 40rem;
+  width: 40rem;
+  background-color: #EFABFF;
+  border: 3px solid black;
+  border-radius: 20px;
+}
 .arrow img {
   height: 5rem;
 }
-.gym-info h1,
+.gym-page h1,
 h2,
 h3 {
+  text-align: center;
   font-family:
     "Bebas Neue",
     "Arial Black",
@@ -42,6 +50,6 @@ h3 {
   text-transform: uppercase;
   font-size: 54px;
 }
-.gym-info h2 {
+.gym-page h2 {
   font-size: 24px;
 }

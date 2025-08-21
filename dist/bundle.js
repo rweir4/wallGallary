@@ -281,10 +281,13 @@ var Card = ({ currentGym, setCurrentGym }) => {
 var Card_default = Card;
 
 // src/App.jsx
-import { jsx as jsx2 } from "react/jsx-runtime";
+import { jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
 var App = () => {
   const [currentGym, setCurrentGym] = useState(1);
-  return /* @__PURE__ */ jsx2(Card_default, { currentGym, setCurrentGym });
+  return /* @__PURE__ */ jsxs2("div", { className: "gym-page", children: [
+    /* @__PURE__ */ jsx2(Card_default, { currentGym, setCurrentGym }),
+    /* @__PURE__ */ jsx2("h1", { className: "reviews", children: "What people are saying:" })
+  ] });
 };
 var App_default = App;
 
