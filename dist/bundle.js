@@ -1,7 +1,21 @@
-// Climbing Gyms Seed Data
-// Within 100 miles of Farragut, TN
+// src/index.js
+import { createRoot } from "react-dom/client";
 
-export const CLIMBING_GYMS = [
+// src/App.jsx
+import React, { useState } from "react";
+
+// src/components/Card.jsx
+import { jsxs } from "react/jsx-runtime";
+var Card = ({ gym, setCurrentGym }) => {
+  return /* @__PURE__ */ jsxs("div", { className: "card-container", children: [
+    gym.name,
+    gym.city
+  ] });
+};
+var Card_default = Card;
+
+// gymSeed.js
+var CLIMBING_GYMS = [
   // Tennessee - Knoxville Area (Closest to Farragut)
   {
     id: 1,
@@ -45,7 +59,6 @@ export const CLIMBING_GYMS = [
     latitude: 35.9544,
     longitude: -83.9295
   },
-
   // Tennessee - Chattanooga Area
   {
     id: 4,
@@ -61,7 +74,6 @@ export const CLIMBING_GYMS = [
     latitude: 35.0456,
     longitude: -85.3097
   },
-
   // Tennessee - Nashville Area
   {
     id: 5,
@@ -161,7 +173,6 @@ export const CLIMBING_GYMS = [
     latitude: 36.1627,
     longitude: -86.7816
   },
-
   // Georgia - Atlanta Metro
   {
     id: 12,
@@ -174,8 +185,8 @@ export const CLIMBING_GYMS = [
     services: ["Lead Climbing", "Top Rope", "Bouldering", "Fitness", "Yoga"],
     description: "Offers lead climbing, top roping, bouldering, fitness, and yoga",
     distance_from_farragut: 100,
-    latitude: 33.7490,
-    longitude: -84.3880
+    latitude: 33.749,
+    longitude: -84.388
   },
   {
     id: 13,
@@ -188,7 +199,7 @@ export const CLIMBING_GYMS = [
     services: ["Lead Climbing", "Top Rope", "Bouldering", "Fitness", "Yoga"],
     description: "Listed among top climbing gyms in Atlanta",
     distance_from_farragut: 95,
-    latitude: 33.7710,
+    latitude: 33.771,
     longitude: -84.3857
   },
   {
@@ -202,8 +213,8 @@ export const CLIMBING_GYMS = [
     services: ["Bouldering", "Fitness Classes"],
     description: "Located on the Atlanta BeltLine's Westside Trail with bouldering and fitness classes",
     distance_from_farragut: 98,
-    latitude: 33.7490,
-    longitude: -84.4280
+    latitude: 33.749,
+    longitude: -84.428
   },
   {
     id: 15,
@@ -216,8 +227,8 @@ export const CLIMBING_GYMS = [
     services: ["Bouldering", "Top Rope", "Lead Climbing"],
     description: "Over 8,800 square feet of climbing surface",
     distance_from_farragut: 100,
-    latitude: 33.7490,
-    longitude: -84.3880
+    latitude: 33.749,
+    longitude: -84.388
   },
   {
     id: 16,
@@ -230,8 +241,8 @@ export const CLIMBING_GYMS = [
     services: ["Top Rope", "Lead Climbing", "Bouldering", "Yoga", "Fitness"],
     description: "Features walls 25-60 feet high, bouldering room, yoga studio",
     distance_from_farragut: 95,
-    latitude: 33.7490,
-    longitude: -84.3880
+    latitude: 33.749,
+    longitude: -84.388
   },
   {
     id: 17,
@@ -263,53 +274,16 @@ export const CLIMBING_GYMS = [
   }
 ];
 
-// Database seed function
-// const seedClimbingGyms = async () => {
-//   try {
-//     console.log('Seeding climbing gyms...');
-    
-//     // If using a SQL database (e.g., PostgreSQL, MySQL)
-//     /*
-//     const query = `
-//       INSERT INTO climbing_gyms (
-//         name, city, state, address, phone, website, services, 
-//         description, distance_from_farragut, latitude, longitude
-//       ) VALUES ?
-//     `;
-    
-//     const values = climbingGyms.map(gym => [
-//       gym.name, gym.city, gym.state, gym.address, gym.phone, gym.website,
-//       JSON.stringify(gym.services), gym.description, gym.distance_from_farragut,
-//       gym.latitude, gym.longitude
-//     ]);
-    
-//     await db.query(query, [values]);
-//     */
-    
-//     // If using MongoDB
-//     /*
-//     await ClimbingGym.insertMany(climbingGyms);
-//     */
-    
-//     // If using Prisma
-//     /*
-//     await prisma.climbingGym.createMany({
-//       data: climbingGyms
-//     });
-//     */
-    
-//     console.log(`Successfully seeded ${climbingGyms.length} climbing gyms`);
-    
-//   } catch (error) {
-//     console.error('Error seeding climbing gyms:', error);
-//   }
-// };
+// src/App.jsx
+import { jsx } from "react/jsx-runtime";
+var App = () => {
+  const [currentGym, setCurrentGym] = useState(CLIMBING_GYMS[0]);
+  return /* @__PURE__ */ jsx(Card_default, { gym: currentGym, setCurrentGym });
+};
+var App_default = App;
 
-// // Export data and seed function
-// module.exports = {
-//   climbingGyms,
-//   seedClimbingGyms
-// };
-
-// // For ES6 modules
-// // export { climbingGyms, seedClimbingGyms };
+// src/index.js
+import { jsx as jsx2 } from "react/jsx-runtime";
+var domNode = document.getElementById("root");
+var root = createRoot(domNode);
+root.render(/* @__PURE__ */ jsx2(App_default, {}));
