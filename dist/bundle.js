@@ -4,16 +4,6 @@ import { createRoot } from "react-dom/client";
 // src/App.jsx
 import React, { useState } from "react";
 
-// src/components/Card.jsx
-import { jsxs } from "react/jsx-runtime";
-var Card = ({ gym, setCurrentGym }) => {
-  return /* @__PURE__ */ jsxs("div", { className: "card-container", children: [
-    gym.name,
-    gym.city
-  ] });
-};
-var Card_default = Card;
-
 // gymSeed.js
 var CLIMBING_GYMS = [
   // Tennessee - Knoxville Area (Closest to Farragut)
@@ -274,16 +264,31 @@ var CLIMBING_GYMS = [
   }
 ];
 
+// src/components/Card.jsx
+import { jsx, jsxs } from "react/jsx-runtime";
+var Card = ({ currentGym, setCurrentGym }) => {
+  const gymInfo = CLIMBING_GYMS.find((gym) => gym.id === currentGym);
+  return /* @__PURE__ */ jsxs("div", { className: "card-container", children: [
+    /* @__PURE__ */ jsxs("div", { className: "gym-info", children: [
+      gymInfo.name,
+      gymInfo.city
+    ] }),
+    /* @__PURE__ */ jsx("button", { className: "arrow", onClick: (() => currentGym > 1 && setCurrentGym(currentGym - 1)), children: /* @__PURE__ */ jsx("img", { src: "images/left-arrow.png" }) }),
+    /* @__PURE__ */ jsx("button", { className: "arrow", onClick: (() => currentGym < CLIMBING_GYMS.length && setCurrentGym(currentGym + 1)), children: /* @__PURE__ */ jsx("img", { src: "images/right-arrow.png" }) })
+  ] });
+};
+var Card_default = Card;
+
 // src/App.jsx
-import { jsx } from "react/jsx-runtime";
+import { jsx as jsx2 } from "react/jsx-runtime";
 var App = () => {
-  const [currentGym, setCurrentGym] = useState(CLIMBING_GYMS[0]);
-  return /* @__PURE__ */ jsx(Card_default, { gym: currentGym, setCurrentGym });
+  const [currentGym, setCurrentGym] = useState(1);
+  return /* @__PURE__ */ jsx2(Card_default, { currentGym, setCurrentGym });
 };
 var App_default = App;
 
 // src/index.js
-import { jsx as jsx2 } from "react/jsx-runtime";
+import { jsx as jsx3 } from "react/jsx-runtime";
 var domNode = document.getElementById("root");
 var root = createRoot(domNode);
-root.render(/* @__PURE__ */ jsx2(App_default, {}));
+root.render(/* @__PURE__ */ jsx3(App_default, {}));

@@ -1,9 +1,19 @@
-const Card = ({ gym, setCurrentGym }) => {
+import { CLIMBING_GYMS } from '../../gymSeed';
+
+const Card = ({ currentGym, setCurrentGym }) => {
+  const gymInfo = CLIMBING_GYMS.find(gym => gym.id === currentGym);
   return (
     <div className="card-container">
-      {gym.name}
-      {gym.city}
-      {/* <button onClick={(() => setCurrentGym(nextGym))}></button> */}
+      <div className="gym-info">
+        {gymInfo.name}
+        {gymInfo.city}
+      </div>
+      <button className="arrow" onClick={(() => currentGym > 1 && setCurrentGym(currentGym - 1))}>
+        <img src='images/left-arrow.png' />
+      </button>
+      <button className="arrow" onClick={(() => currentGym < CLIMBING_GYMS.length && setCurrentGym(currentGym + 1))}>
+        <img src='images/right-arrow.png' />
+      </button>
     </div>
   );
 }
