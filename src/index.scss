@@ -37,7 +37,6 @@ body {
 }
 
 .reviews {
-  height: 60rem;
   width: 40rem;
   background-color: #EFABFF;
   border: 3px solid black;
@@ -66,7 +65,9 @@ body {
 /* Programmable Search Styling */
 .programmable-search {
   padding: 20px;
+  max-height: 40rem;
   max-width: 50rem;
+  overflow: scroll;
   background-color: #559cf2;
   border: 2px solid black;
   border-radius: 12px;
@@ -167,43 +168,45 @@ body {
 // GymServicesPieChart.scss
 
 .gym-services-pie-chart {
-  // padding: 24px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  height: 500px;
+  height: 400px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
 
   &__title {
     font-family: 'Bebas Neue', Arial, sans-serif;
-    font-size: 28px;
-    // margin-bottom: 20px;
+    font-size: 24px;
     color: #000;
     letter-spacing: 2px;
     text-align: center;
     text-transform: uppercase;
+    margin: 0 0 16px 0;
   }
 
   &__chart-container {
-    width: 80%;
-    height: 80%;
+    flex: 1;
+    min-height: 200px;
   }
 
   &__legend {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    // gap: 16px;
-    // margin-top: 16px;
+    gap: 8px;
+    margin-top: 16px;
 
     &-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
+      gap: 6px;
+      padding: 6px 10px;
       background: rgba(255, 255, 255, 0.8);
-      border-radius: 20px;
-      font-size: 14px;
+      border-radius: 16px;
+      font-size: 12px;
       font-weight: 600;
       transition: all 0.2s ease;
       cursor: pointer;
@@ -214,8 +217,8 @@ body {
       }
 
       &-color {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         border-radius: 50%;
         border: none;
         box-shadow: none;
@@ -229,7 +232,7 @@ body {
         color: #333;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        font-size: 12px;
+        font-size: 11px;
 
         &--active {
           // Color will be set dynamically via style prop

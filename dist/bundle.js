@@ -23335,7 +23335,7 @@ var GymServicesPieChart = ({ services }) => {
           cy: "50%",
           labelLine: false,
           label: renderCustomizedLabel,
-          outerRadius: 120,
+          outerRadius: 100,
           fill: "#8884d8",
           dataKey: "value",
           onMouseEnter: onPieEnter,
@@ -23389,7 +23389,7 @@ var GymServicesPieChart = ({ services }) => {
 };
 var Services_default = GymServicesPieChart;
 
-// src/components/GoogleSearch.jsx
+// src/components/googleSearch.jsx
 import { useState as useState5 } from "react";
 import { jsx as jsx3, jsxs as jsxs3 } from "react/jsx-runtime";
 var GOOGLE_API_KEY = "AIzaSyAY6iSKkTsZg15ejXbueNfk2lOTCEA153o";
@@ -23758,13 +23758,14 @@ var App = () => {
     services: r2.extractedServices || []
   }));
   const activeList = normalizedSearchResults.length > 0 ? normalizedSearchResults : CLIMBING_GYMS2;
-  const currentGym = activeList[activeIndex];
-  const goPrev = () => setActiveIndex((i) => i > 0 ? i-- : 0);
-  const goNext = () => setActiveIndex((i) => i < activeList.length - 1 ? i++ : i);
+  const currentGym = activeList[activeIndex] || activeList[0];
+  const goPrev = () => setActiveIndex((i) => i > 0 ? i - 1 : 0);
+  const goNext = () => setActiveIndex((i) => i < activeList.length - 1 ? i + 1 : i);
   const onResults = (items) => {
     setSearchResults(items || []);
     setActiveIndex(0);
   };
+  console.log("activeIndex", activeIndex);
   return /* @__PURE__ */ jsxs4("div", { className: "gym-page-container", children: [
     /* @__PURE__ */ jsx4("h1", { children: "WALL GALLERY" }),
     /* @__PURE__ */ jsxs4("div", { className: "gym-page", children: [

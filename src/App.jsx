@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Card from './components/Card';
 import GymServicesPieChart from './components/Services';
-import { ProgrammableSearch } from './components/GoogleSearch';
+import { ProgrammableSearch } from './components/googleSearch';
 
 import { CLIMBING_GYMS } from '../gymSeed';
 
@@ -19,14 +19,16 @@ const App = () => {
   }));
 
   const activeList = normalizedSearchResults.length > 0 ? normalizedSearchResults : CLIMBING_GYMS;
-  const currentGym = activeList[activeIndex];
+  const currentGym = activeList[activeIndex] || activeList[0];
   
-  const goPrev = () => setActiveIndex((i) => (i > 0 ? i-- : 0));
-  const goNext = () => setActiveIndex((i) => (i < activeList.length - 1 ? i++ : i));
+  const goPrev = () => setActiveIndex((i) => (i > 0 ? i - 1 : 0));
+  const goNext = () => setActiveIndex((i) => (i < activeList.length - 1 ? i + 1 : i));
   const onResults = (items) => { 
     setSearchResults(items || [])
     setActiveIndex(0)
   }
+
+  console.log('activeIndex', activeIndex)
 
   return (
     <div className="gym-page-container">
