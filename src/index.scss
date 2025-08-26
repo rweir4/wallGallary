@@ -1,5 +1,5 @@
 body {
-  background-color: #559cf2;
+  background-color: #f0edeb;
 }
 
 .card-container {
@@ -30,6 +30,12 @@ body {
   margin: auto;
 }
 
+.generic-embed-img {
+  margin: auto;
+  object-fit: cover;
+  height: 20rem;
+}
+
 .reviews {
   height: 60rem;
   width: 40rem;
@@ -44,7 +50,7 @@ body {
   }
 }
 
-.gym-page h1, h2, h3 {
+.gym-page-container h1, h2, h3 {
   text-align: center;
   font-family: 'Bebas Neue', 'Arial Black', sans-serif;
   font-weight: 400;
@@ -57,26 +63,12 @@ body {
   font-size: 24px;
 }
 
-/* Google Custom Search Styling */
-.google-search-container {
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.google-search-container h3 {
-  font-family: 'Bebas Neue', Arial, sans-serif;
-  font-size: 24px;
-  margin-bottom: 16px;
-  color: #333;
-  letter-spacing: 1px;
-}
-
 /* Programmable Search Styling */
 .programmable-search {
   padding: 20px;
-  background: rgba(255, 255, 255, 0.9);
+  max-width: 50rem;
+  background-color: #559cf2;
+  border: 2px solid black;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -138,6 +130,10 @@ body {
   border-radius: 8px;
   margin-bottom: 12px;
   border-left: 4px solid #667eea;
+
+  &:hover {
+    background: rgba(255, 255, 255, .9);
+  }
 }
 
 .search-result h5 {

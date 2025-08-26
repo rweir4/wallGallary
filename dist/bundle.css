@@ -1,6 +1,6 @@
 /* src/index.scss */
 body {
-  background-color: #559cf2;
+  background-color: #f0edeb;
 }
 .card-container {
   width: 50rem;
@@ -27,6 +27,11 @@ body {
   height: 20rem;
   margin: auto;
 }
+.generic-embed-img {
+  margin: auto;
+  object-fit: cover;
+  height: 20rem;
+}
 .reviews {
   height: 60rem;
   width: 40rem;
@@ -37,7 +42,7 @@ body {
 .arrow img {
   height: 5rem;
 }
-.gym-page h1,
+.gym-page-container h1,
 h2,
 h3 {
   text-align: center;
@@ -53,25 +58,11 @@ h3 {
 .gym-page h2 {
   font-size: 24px;
 }
-.google-search-container {
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-.google-search-container h3 {
-  font-family:
-    "Bebas Neue",
-    Arial,
-    sans-serif;
-  font-size: 24px;
-  margin-bottom: 16px;
-  color: #333;
-  letter-spacing: 1px;
-}
 .programmable-search {
   padding: 20px;
-  background: rgba(255, 255, 255, 0.9);
+  max-width: 50rem;
+  background-color: #559cf2;
+  border: 2px solid black;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -127,6 +118,9 @@ h3 {
   border-radius: 8px;
   margin-bottom: 12px;
   border-left: 4px solid #667eea;
+}
+.search-result:hover {
+  background: rgba(255, 255, 255, 0.9);
 }
 .search-result h5 {
   margin: 0 0 8px 0;

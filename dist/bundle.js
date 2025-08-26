@@ -5536,13 +5536,16 @@ import React32, { useState as useState6 } from "react";
 
 // src/components/Card.jsx
 import { jsx, jsxs } from "react/jsx-runtime";
+var RESTRICTED_WEBSITES = ["reddit"];
 var Card = ({ currentGym, onPrev, onNext }) => {
+  const isRestricted = RESTRICTED_WEBSITES.find((url) => url.match(/`${currentGym?.website}`/g));
+  console.log("is restricted", isRestricted);
   return /* @__PURE__ */ jsxs("div", { className: "card-container", children: [
     /* @__PURE__ */ jsxs("div", { className: "gym-info", children: [
       /* @__PURE__ */ jsx("h1", { children: currentGym.name }),
       /* @__PURE__ */ jsx("h2", { children: currentGym.city })
     ] }),
-    /* @__PURE__ */ jsx("iframe", { src: `${currentGym.website}`, frameborder: "0", title: `${currentGym.name}`, className: "gym-embed" }),
+    isRestricted ? /* @__PURE__ */ jsx("iframe", { src: `${currentGym.website}`, frameborder: "0", title: `${currentGym.name}`, className: "gym-embed" }) : /* @__PURE__ */ jsx("img", { className: "generic-embed-img", src: "images/climbing-generic.png" }),
     /* @__PURE__ */ jsx("button", { className: "arrow", onClick: onPrev, children: /* @__PURE__ */ jsx("img", { src: "images/left-arrow.png" }) }),
     /* @__PURE__ */ jsx("button", { className: "arrow", onClick: onNext, children: /* @__PURE__ */ jsx("img", { src: "images/right-arrow.png" }) })
   ] });
@@ -23403,8 +23406,46 @@ var ProgrammableSearch = ({ onResults }) => {
         `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${SEARCH_ENGINE_ID}&q=${searchQuery}`
       );
       const data = await response.json();
-      setResults(data.items || []);
-      if (onResults) onResults(data.items || []);
+      const processedResults = (data.items || []).map((item, idx) => {
+        const content = `${item.title || ""} ${item.snippet || ""}`.toLowerCase();
+        const serviceKeywords = {
+          "Bouldering": ["bouldering", "boulder", "boulder wall", "boulder room"],
+          "Top Rope": ["top rope", "top roping", "rope climbing", "belay", "top rope wall"],
+          "Lead Climbing": ["lead climbing", "lead", "sport climbing", "lead wall"],
+          "Auto Belay": ["auto belay", "autobelay", "auto-belay", "auto belay wall"],
+          "Fitness": ["fitness", "gym", "workout", "training", "exercise"],
+          "Yoga": ["yoga", "pilates", "stretching", "meditation"],
+          "Training": ["training", "classes", "lessons", "instruction", "coaching"],
+          "Equipment": ["equipment", "gear", "rental", "shop", "pro shop"]
+        };
+        const foundServices = [];
+        Object.entries(serviceKeywords).forEach(([service, keywords]) => {
+          if (keywords.some((keyword) => content.includes(keyword))) {
+            foundServices.push(service);
+          }
+        });
+        let city = "";
+        if (item.displayLink) {
+          const domainParts = item.displayLink.split(".");
+          if (domainParts.length > 2) {
+            city = domainParts[0].charAt(0).toUpperCase() + domainParts[0].slice(1);
+          }
+        }
+        if (!city && item.snippet) {
+          const cityMatch = item.snippet.match(/(\w+),?\s+(TN|GA|NC|SC|KY|VA|AL)/i);
+          if (cityMatch) {
+            city = cityMatch[1];
+          }
+        }
+        return {
+          ...item,
+          id: idx + 1,
+          extractedCity: city || "Unknown",
+          extractedServices: foundServices
+        };
+      });
+      setResults(processedResults);
+      if (onResults) onResults(processedResults);
     } catch (error) {
       console.error("Search error:", error);
       setResults([]);
@@ -23435,7 +23476,7 @@ var ProgrammableSearch = ({ onResults }) => {
     results.length > 0 && /* @__PURE__ */ jsxs3("div", { className: "search-results", children: [
       /* @__PURE__ */ jsx3("h4", { children: "Search Results:" }),
       results.map((result, index) => /* @__PURE__ */ jsxs3("div", { className: "search-result", children: [
-        /* @__PURE__ */ jsx3("h5", { children: /* @__PURE__ */ jsx3("a", { href: result.link, target: "_blank", rel: "noopener noreferrer", children: result.title }) }),
+        /* @__PURE__ */ jsx3("h5", { onClick: () => setCurrentGym(result), children: /* @__PURE__ */ jsx3("a", { href: result.link, target: "_blank", rel: "noopener noreferrer", children: result.title }) }),
         /* @__PURE__ */ jsx3("p", { children: result.snippet })
       ] }, index))
     ] })
@@ -23710,23 +23751,29 @@ var App = () => {
   const normalizedSearchResults = searchResults.map((r2, idx) => ({
     id: idx + 1,
     name: r2.title || r2.displayLink || "Result",
-    city: r2.displayLink || "",
+    city: r2.extractedCity || r2.displayLink || "",
     website: r2.link,
-    services: []
+    services: r2.extractedServices || []
   }));
   const activeList = normalizedSearchResults.length > 0 ? normalizedSearchResults : CLIMBING_GYMS2;
   const currentGym = activeList[activeIndex];
+  console.log("activeIndex", activeIndex);
+  console.log("activeList", activeList);
+  console.log("currentGym", currentGym);
   const goPrev = () => setActiveIndex((i) => i > 0 ? i - 1 : 0);
   const goNext = () => setActiveIndex((i) => i < activeList.length - 1 ? i + 1 : i);
-  return /* @__PURE__ */ jsxs4("div", { className: "gym-page", children: [
-    /* @__PURE__ */ jsx4(ProgrammableSearch, { onResults: (items) => {
-      setSearchResults(items || []);
-      setActiveIndex(0);
-    } }),
-    /* @__PURE__ */ jsx4(Card_default, { currentGym, onPrev: goPrev, onNext: goNext }),
-    currentGym?.services && currentGym.services.length > 0 && /* @__PURE__ */ jsxs4("div", { className: "reviews", children: [
-      /* @__PURE__ */ jsx4("h1", { children: "About the gym:" }),
-      /* @__PURE__ */ jsx4(Services_default, { services: currentGym.services })
+  return /* @__PURE__ */ jsxs4("div", { className: "gym-page-container", children: [
+    /* @__PURE__ */ jsx4("h1", { children: "WALL GALLERY" }),
+    /* @__PURE__ */ jsxs4("div", { className: "gym-page", children: [
+      /* @__PURE__ */ jsx4(ProgrammableSearch, { onResults: (items) => {
+        setSearchResults(items || []);
+        setActiveIndex(0);
+      } }),
+      /* @__PURE__ */ jsx4(Card_default, { currentGym, onPrev: goPrev, onNext: goNext }),
+      currentGym?.services && currentGym.services.length > 0 && /* @__PURE__ */ jsxs4("div", { className: "reviews", children: [
+        /* @__PURE__ */ jsx4("h1", { children: "About the gym:" }),
+        /* @__PURE__ */ jsx4(Services_default, { services: currentGym.services })
+      ] })
     ] })
   ] });
 };

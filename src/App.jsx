@@ -13,28 +13,34 @@ const App = () => {
   const normalizedSearchResults = searchResults.map((r, idx) => ({
     id: idx + 1,
     name: r.title || r.displayLink || 'Result',
-    city: r.displayLink || '',
+    city: r.extractedCity || r.displayLink || '',
     website: r.link,
-    services: [],
+    services: r.extractedServices || [],
   }));
 
   const activeList = normalizedSearchResults.length > 0 ? normalizedSearchResults : CLIMBING_GYMS;
   const currentGym = activeList[activeIndex];
 
+  console.log('activeIndex', activeIndex)
+  console.log('activeList', activeList)
+  console.log('currentGym', currentGym)
   const goPrev = () => setActiveIndex((i) => (i > 0 ? i - 1 : 0));
   const goNext = () => setActiveIndex((i) => (i < activeList.length - 1 ? i + 1 : i));
 
   return (
-    <div className="gym-page">
-      <ProgrammableSearch onResults={(items) => { setSearchResults(items || []); setActiveIndex(0); }} />
+    <div className="gym-page-container">
+      <h1>WALL GALLERY</h1>
+      <div className="gym-page">
+        <ProgrammableSearch onResults={(items) => { setSearchResults(items || []); setActiveIndex(0); }} />
 
-      <Card currentGym={currentGym} onPrev={goPrev} onNext={goNext} />
-      {currentGym?.services && currentGym.services.length > 0 && (
-        <div className='reviews'>
-          <h1>About the gym:</h1>
-          <GymServicesPieChart services={currentGym.services}/>
-        </div>
-      )}
+        <Card currentGym={currentGym} onPrev={goPrev} onNext={goNext} />
+        {currentGym?.services && currentGym.services.length > 0 && (
+          <div className='reviews'>
+            <h1>About the gym:</h1>
+            <GymServicesPieChart services={currentGym.services}/>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
-const SEARCH_ENGINE_ID = process.env.SEARCH_ENGINE_ID;
+const SEARCH_ENGINE_ID = process.env.SEARCH_ENGINE_ID; 
 
 const ProgrammableSearch = ({ onResults }) => {
   const [query, setQuery] = useState('');
@@ -16,8 +16,60 @@ const ProgrammableSearch = ({ onResults }) => {
       );
       
       const data = await response.json();
-      setResults(data.items || []);
-      if (onResults) onResults(data.items || []);
+      
+      // Process results to extract services and location info
+      const processedResults = (data.items || []).map((item, idx) => {
+        // Combine title and snippet for content analysis
+        const content = `${item.title || ''} ${item.snippet || ''}`.toLowerCase();
+        
+        // Define service keywords to look for
+        const serviceKeywords = {
+          'Bouldering': ['bouldering', 'boulder', 'boulder wall', 'boulder room'],
+          'Top Rope': ['top rope', 'top roping', 'rope climbing', 'belay', 'top rope wall'],
+          'Lead Climbing': ['lead climbing', 'lead', 'sport climbing', 'lead wall'],
+          'Auto Belay': ['auto belay', 'autobelay', 'auto-belay', 'auto belay wall'],
+          'Fitness': ['fitness', 'gym', 'workout', 'training', 'exercise'],
+          'Yoga': ['yoga', 'pilates', 'stretching', 'meditation'],
+          'Training': ['training', 'classes', 'lessons', 'instruction', 'coaching'],
+          'Equipment': ['equipment', 'gear', 'rental', 'shop', 'pro shop']
+        };
+        
+        // Find matching services
+        const foundServices = [];
+        Object.entries(serviceKeywords).forEach(([service, keywords]) => {
+          if (keywords.some(keyword => content.includes(keyword))) {
+            foundServices.push(service);
+          }
+        });
+        
+        // Extract city from displayLink or snippet
+        let city = '';
+        if (item.displayLink) {
+          // Try to extract city from domain (e.g., "knoxville.onsightrockgym.com" -> "Knoxville")
+          const domainParts = item.displayLink.split('.');
+          if (domainParts.length > 2) {
+            city = domainParts[0].charAt(0).toUpperCase() + domainParts[0].slice(1);
+          }
+        }
+        
+        // If no city found, try to extract from snippet
+        if (!city && item.snippet) {
+          const cityMatch = item.snippet.match(/(\w+),?\s+(TN|GA|NC|SC|KY|VA|AL)/i);
+          if (cityMatch) {
+            city = cityMatch[1];
+          }
+        }
+        
+        return {
+          ...item,
+          id: idx + 1,
+          extractedCity: city || 'Unknown',
+          extractedServices: foundServices
+        };
+      });
+      
+      setResults(processedResults);
+      if (onResults) onResults(processedResults);
     } catch (error) {
       console.error('Search error:', error);
       setResults([]);
@@ -53,7 +105,7 @@ const ProgrammableSearch = ({ onResults }) => {
           <h4>Search Results:</h4>
           {results.map((result, index) => (
             <div key={index} className="search-result">
-              <h5>
+              <h5 onClick={() => setCurrentGym(result)}>
                 <a href={result.link} target="_blank" rel="noopener noreferrer">
                   {result.title}
                 </a>
