@@ -5538,13 +5538,13 @@ import React32, { useState as useState6 } from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
 var RESTRICTED_WEBSITES = ["reddit"];
 var Card = ({ currentGym, onPrev, onNext }) => {
-  const isRestricted = RESTRICTED_WEBSITES.find((url) => url.match(/`${currentGym?.website}`/g));
+  const isRestricted = RESTRICTED_WEBSITES.some((url) => currentGym?.website.includes(url));
   return /* @__PURE__ */ jsxs("div", { className: "card-container", children: [
     /* @__PURE__ */ jsxs("div", { className: "gym-info", children: [
       /* @__PURE__ */ jsx("h1", { children: currentGym.name }),
       /* @__PURE__ */ jsx("h2", { children: currentGym.city })
     ] }),
-    isRestricted ? /* @__PURE__ */ jsx("iframe", { src: `${currentGym.website}`, frameborder: "0", title: `${currentGym.name}`, className: "gym-embed" }) : /* @__PURE__ */ jsx("img", { className: "generic-embed-img", src: "images/climbing-generic.png" }),
+    isRestricted ? /* @__PURE__ */ jsx("img", { className: "generic-embed-img", src: "images/climbing-generic.png" }) : /* @__PURE__ */ jsx("iframe", { src: `${currentGym.website}`, frameborder: "0", title: `${currentGym.name}`, className: "gym-embed" }),
     /* @__PURE__ */ jsx("button", { className: "arrow", onClick: onPrev, children: /* @__PURE__ */ jsx("img", { src: "images/left-arrow.png" }) }),
     /* @__PURE__ */ jsx("button", { className: "arrow", onClick: onNext, children: /* @__PURE__ */ jsx("img", { src: "images/right-arrow.png" }) })
   ] });

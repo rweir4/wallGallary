@@ -1,8 +1,7 @@
 const RESTRICTED_WEBSITES = ['reddit'];
 
 const Card = ({ currentGym, onPrev, onNext }) => {
-  const isRestricted = RESTRICTED_WEBSITES.find(url => url.match(/`${currentGym?.website}`/g));
-  // console.log('is restricted', isRestricted)
+  const isRestricted = RESTRICTED_WEBSITES.some(url => currentGym?.website.includes(url));
 
   return (
     <div className="card-container">
@@ -11,8 +10,8 @@ const Card = ({ currentGym, onPrev, onNext }) => {
         <h2>{currentGym.city}</h2>
       </div>
       {isRestricted ?
-        <iframe src={`${currentGym.website}`} frameborder="0" title={`${currentGym.name}`} className="gym-embed" /> :
-        <img className="generic-embed-img" src='images/climbing-generic.png' />
+        <img className="generic-embed-img" src='images/climbing-generic.png' /> :
+        <iframe src={`${currentGym.website}`} frameborder="0" title={`${currentGym.name}`} className="gym-embed" />
       }
       <button className="arrow" onClick={onPrev}>
         <img src='images/left-arrow.png' />
