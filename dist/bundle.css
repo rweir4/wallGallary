@@ -28,7 +28,7 @@ body {
   margin: auto;
 }
 .reviews {
-  height: 40rem;
+  height: 60rem;
   width: 40rem;
   background-color: #EFABFF;
   border: 3px solid black;
@@ -52,4 +52,175 @@ h3 {
 }
 .gym-page h2 {
   font-size: 24px;
+}
+.google-search-container {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.google-search-container h3 {
+  font-family:
+    "Bebas Neue",
+    Arial,
+    sans-serif;
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #333;
+  letter-spacing: 1px;
+}
+.programmable-search {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.programmable-search form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.search-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+.programmable-search button {
+  padding: 12px 24px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.programmable-search button:hover:not(:disabled) {
+  background: #5a67d8;
+}
+.programmable-search button:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+}
+.search-results {
+  margin-top: 20px;
+}
+.search-results h4 {
+  font-family:
+    "Bebas Neue",
+    Arial,
+    sans-serif;
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: #333;
+}
+.search-result {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border-left: 4px solid #667eea;
+}
+.search-result h5 {
+  margin: 0 0 8px 0;
+}
+.search-result h5 a {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 18px;
+}
+.search-result h5 a:hover {
+  text-decoration: underline;
+}
+.search-result p {
+  margin: 0;
+  color: #666;
+  line-height: 1.5;
+}
+.gym-services-pie-chart {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  height: 500px;
+}
+.gym-services-pie-chart__title {
+  font-family:
+    "Bebas Neue",
+    Arial,
+    sans-serif;
+  font-size: 28px;
+  color: #000;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.gym-services-pie-chart__chart-container {
+  width: 80%;
+  height: 80%;
+}
+.gym-services-pie-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.gym-services-pie-chart__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  transform: scale(1);
+}
+.gym-services-pie-chart__legend-item--active {
+  transform: scale(1.05);
+}
+.gym-services-pie-chart__legend-item-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: none;
+}
+.gym-services-pie-chart__legend-item-color--active {
+  border: 2px solid #fff;
+}
+.gym-services-pie-chart__legend-item-text {
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 12px;
+}
+.custom-tooltip {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-weight: 600;
+}
+.custom-tooltip__name {
+  margin: 0;
+}
+.custom-tooltip__percentage {
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: #666;
+}
+.pie-label {
+  fill: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
