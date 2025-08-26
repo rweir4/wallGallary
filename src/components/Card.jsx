@@ -2,7 +2,7 @@ const RESTRICTED_WEBSITES = ['reddit'];
 
 const Card = ({ currentGym, onPrev, onNext }) => {
   const isRestricted = RESTRICTED_WEBSITES.find(url => url.match(/`${currentGym?.website}`/g));
-  console.log('is restricted', isRestricted)
+  // console.log('is restricted', isRestricted)
 
   return (
     <div className="card-container">

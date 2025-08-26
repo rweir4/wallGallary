@@ -20,18 +20,19 @@ const App = () => {
 
   const activeList = normalizedSearchResults.length > 0 ? normalizedSearchResults : CLIMBING_GYMS;
   const currentGym = activeList[activeIndex];
-
-  console.log('activeIndex', activeIndex)
-  console.log('activeList', activeList)
-  console.log('currentGym', currentGym)
-  const goPrev = () => setActiveIndex((i) => (i > 0 ? i - 1 : 0));
-  const goNext = () => setActiveIndex((i) => (i < activeList.length - 1 ? i + 1 : i));
+  
+  const goPrev = () => setActiveIndex((i) => (i > 0 ? i-- : 0));
+  const goNext = () => setActiveIndex((i) => (i < activeList.length - 1 ? i++ : i));
+  const onResults = (items) => { 
+    setSearchResults(items || [])
+    setActiveIndex(0)
+  }
 
   return (
     <div className="gym-page-container">
       <h1>WALL GALLERY</h1>
       <div className="gym-page">
-        <ProgrammableSearch onResults={(items) => { setSearchResults(items || []); setActiveIndex(0); }} />
+        <ProgrammableSearch onResults={onResults} currentGymIndex={activeIndex} setActiveIndex={setActiveIndex}/>
 
         <Card currentGym={currentGym} onPrev={goPrev} onNext={goNext} />
         {currentGym?.services && currentGym.services.length > 0 && (

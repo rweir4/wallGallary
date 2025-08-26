@@ -122,6 +122,12 @@ h3 {
 .search-result:hover {
   background: rgba(255, 255, 255, 0.9);
 }
+.search-result:active {
+  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.7);
+}
+.selected-background {
+  background: rgb(255, 255, 255);
+}
 .search-result h5 {
   margin: 0 0 8px 0;
 }

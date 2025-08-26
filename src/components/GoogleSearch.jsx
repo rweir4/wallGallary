@@ -3,7 +3,7 @@ import { useState } from 'react';
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 const SEARCH_ENGINE_ID = process.env.SEARCH_ENGINE_ID; 
 
-const ProgrammableSearch = ({ onResults }) => {
+const ProgrammableSearch = ({ onResults, currentGymIndex, setActiveIndex }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -103,16 +103,19 @@ const ProgrammableSearch = ({ onResults }) => {
       {results.length > 0 && (
         <div className="search-results">
           <h4>Search Results:</h4>
-          {results.map((result, index) => (
-            <div key={index} className="search-result">
-              <h5 onClick={() => setCurrentGym(result)}>
-                <a href={result.link} target="_blank" rel="noopener noreferrer">
-                  {result.title}
-                </a>
-              </h5>
-              <p>{result.snippet}</p>
-            </div>
-          ))}
+          {results.map((result, index) => {
+            const isCurrent = index === currentGymIndex ? 'selected-background' : '';
+            return (
+              <div key={index} className={`search-result ${isCurrent}`} onClick={() => setActiveIndex(index)}>
+                <h5>
+                  <a href={result.link} target="_blank" rel="noopener noreferrer">
+                    {result.title}
+                  </a>
+                </h5>
+                <p>{result.snippet}</p>
+              </div>
+            )
+          })}
         </div>
       )}
     </div>

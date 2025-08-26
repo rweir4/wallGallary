@@ -5539,7 +5539,6 @@ import { jsx, jsxs } from "react/jsx-runtime";
 var RESTRICTED_WEBSITES = ["reddit"];
 var Card = ({ currentGym, onPrev, onNext }) => {
   const isRestricted = RESTRICTED_WEBSITES.find((url) => url.match(/`${currentGym?.website}`/g));
-  console.log("is restricted", isRestricted);
   return /* @__PURE__ */ jsxs("div", { className: "card-container", children: [
     /* @__PURE__ */ jsxs("div", { className: "gym-info", children: [
       /* @__PURE__ */ jsx("h1", { children: currentGym.name }),
@@ -23395,7 +23394,7 @@ import { useState as useState5 } from "react";
 import { jsx as jsx3, jsxs as jsxs3 } from "react/jsx-runtime";
 var GOOGLE_API_KEY = "AIzaSyAY6iSKkTsZg15ejXbueNfk2lOTCEA153o";
 var SEARCH_ENGINE_ID = "931711cec737347c9";
-var ProgrammableSearch = ({ onResults }) => {
+var ProgrammableSearch = ({ onResults, currentGymIndex, setActiveIndex }) => {
   const [query, setQuery] = useState5("");
   const [results, setResults] = useState5([]);
   const [loading, setLoading] = useState5(false);
@@ -23475,10 +23474,13 @@ var ProgrammableSearch = ({ onResults }) => {
     ] }),
     results.length > 0 && /* @__PURE__ */ jsxs3("div", { className: "search-results", children: [
       /* @__PURE__ */ jsx3("h4", { children: "Search Results:" }),
-      results.map((result, index) => /* @__PURE__ */ jsxs3("div", { className: "search-result", children: [
-        /* @__PURE__ */ jsx3("h5", { onClick: () => setCurrentGym(result), children: /* @__PURE__ */ jsx3("a", { href: result.link, target: "_blank", rel: "noopener noreferrer", children: result.title }) }),
-        /* @__PURE__ */ jsx3("p", { children: result.snippet })
-      ] }, index))
+      results.map((result, index) => {
+        const isCurrent = index === currentGymIndex ? "selected-background" : "";
+        return /* @__PURE__ */ jsxs3("div", { className: `search-result ${isCurrent}`, onClick: () => setActiveIndex(index), children: [
+          /* @__PURE__ */ jsx3("h5", { children: /* @__PURE__ */ jsx3("a", { href: result.link, target: "_blank", rel: "noopener noreferrer", children: result.title }) }),
+          /* @__PURE__ */ jsx3("p", { children: result.snippet })
+        ] }, index);
+      })
     ] })
   ] });
 };
@@ -23757,18 +23759,16 @@ var App = () => {
   }));
   const activeList = normalizedSearchResults.length > 0 ? normalizedSearchResults : CLIMBING_GYMS2;
   const currentGym = activeList[activeIndex];
-  console.log("activeIndex", activeIndex);
-  console.log("activeList", activeList);
-  console.log("currentGym", currentGym);
-  const goPrev = () => setActiveIndex((i) => i > 0 ? i - 1 : 0);
-  const goNext = () => setActiveIndex((i) => i < activeList.length - 1 ? i + 1 : i);
+  const goPrev = () => setActiveIndex((i) => i > 0 ? i-- : 0);
+  const goNext = () => setActiveIndex((i) => i < activeList.length - 1 ? i++ : i);
+  const onResults = (items) => {
+    setSearchResults(items || []);
+    setActiveIndex(0);
+  };
   return /* @__PURE__ */ jsxs4("div", { className: "gym-page-container", children: [
     /* @__PURE__ */ jsx4("h1", { children: "WALL GALLERY" }),
     /* @__PURE__ */ jsxs4("div", { className: "gym-page", children: [
-      /* @__PURE__ */ jsx4(ProgrammableSearch, { onResults: (items) => {
-        setSearchResults(items || []);
-        setActiveIndex(0);
-      } }),
+      /* @__PURE__ */ jsx4(ProgrammableSearch, { onResults, currentGymIndex: activeIndex, setActiveIndex }),
       /* @__PURE__ */ jsx4(Card_default, { currentGym, onPrev: goPrev, onNext: goNext }),
       currentGym?.services && currentGym.services.length > 0 && /* @__PURE__ */ jsxs4("div", { className: "reviews", children: [
         /* @__PURE__ */ jsx4("h1", { children: "About the gym:" }),
